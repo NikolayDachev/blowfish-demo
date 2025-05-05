@@ -25,7 +25,7 @@ git clone https://github.com/NikolayDachev/blowfish-demo.git
 cd blowfish-demo
 ```
 
-No additional libraries are needed—both.
+No additional libraries are needed.
 
 ## Usage
 
