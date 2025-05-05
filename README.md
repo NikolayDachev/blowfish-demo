@@ -1,4 +1,4 @@
-# Blowfish Manual v0.6
+# Blowfish Demo v0.6
 
 **Author**: Nikolay Dachev <nikolay@dachev.info>
 
