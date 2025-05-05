@@ -25,7 +25,7 @@ git clone https://github.com/NikolayDachev/blowfish-demo.git
 cd blowfish-demo
 ```
 
-No additional libraries are needed—both the P-array and S-box tables are embedded directly in `blowfish_demo.py`.
+No additional libraries are needed—both.
 
 ## Usage
 
