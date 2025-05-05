@@ -1,0 +1,6 @@
+ ..\dist\blowfish_demo.exe -i "Demo" -k "MySecret" -l demo     
+Key schedule log: demo_keyschedule_20250505_204344.log
+Encryption log:    demo_encrypt_20250505_204344.log
+Decryption log:    demo_decrypt_20250505_204344.log
+Ciphertext (Base64): QXY3dc6Xbfw=
+Recovered plaintext: Demo
