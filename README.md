@@ -1,10 +1,10 @@
-# Blowfish Manual
+# Blowfish Demo v0.5
 
 **Author**: Nikolay Dachev <nikolay@dachev.info>
 
 ## Description
 
-`blowfish_demo.py` is an educational Python script that illustrates the Blowfish block cipher step by step. It provides full visibility into the algorithm’s Feistel rounds, P-array, and S-box operations.
+`blowfish_demo.py` is an educational Python script that illustrates the Blowfish block cipher step by step. It provides full visibility into the algorithm’s Feistel rounds, P-array, and S-box operations, with optional key scheduling support via `--key`.
 
 ## Purpose
 
@@ -30,12 +30,13 @@ No additional libraries are needed—both the P-array and S-box tables are embed
 ## Usage
 
 ```bash
-python blowfish_demo.py --input <text> --logfile <log_basename> [--format dec|hex|both]
+python blowfish_demo.py --input <text> --key <key_text> --logfile <log_basename> [--format dec|hex|both]
 ```
 
 ### Arguments
 
 - `--input`  : Up to 8 ASCII characters to encrypt.
+- `--key`    : Key as readable text (1–56 bytes) used for P/S initialization.
 - `--logfile`: Base name for log files (creates `<logfile>_encrypt_<timestamp>.log` and `<logfile>_decrypt_<timestamp>.log`).
 - `--format`: (default `dec`) Numeric format for logs:
   - `dec`  – decimal only
@@ -45,25 +46,34 @@ python blowfish_demo.py --input <text> --logfile <log_basename> [--format dec|he
 ### Examples
 
 ```bash
-# Default decimal logs
-python blowfish_demo.py --input "BlowFish" --logfile demo
+# Default decimal logs with key
+python blowfish_demo.py --input "BlowFish" --key "MySecret" --logfile demo
 
 # Both formats
-python blowfish_demo.py --input "test1234" --logfile debug --format both
+python blowfish_demo.py --input "test1234" --key "MySecretKey" --logfile debug --format both
 ```
 
 ## Log Structure
 
-1. **Input Data**: plaintext and initial (L, R) blocks.
+1. **Input Data**: plaintext, key text, and initial (L, R) blocks.
 2. **Encryption**:
    - Initial values of L and R
    - Each round:
      - `L ^= P[i]`
      - `R ^= F(L)` with detailed F steps
      - Snapshot of first 16 entries from each S-box
-   - Final `L ^= P[17]`, `R ^= P[16]`
+   - Final `R ^= P[16]`, `L ^= P[17]`
 3. **Encrypted Output**: encrypted block and resulting text.
 4. **Decryption**: same steps in reverse order of P-array indices.
+
+## Key Schedule Logs
+
+When you run the script with `--key <key_text>`, a separate Key Schedule log file is generated named `<logfile>_keyschedule_<timestamp>.log`. This log includes:
+
+- **Original P-array** printed in rows of six values, respecting your `--format` choice (decimal, hexadecimal, or both).
+- **Key bytes** used for initialization.
+- **Each P-array update**: shows the old value, the key-derived word, and the new value.
+- **Each S-box update** (all 512 entries): shows the old and new values for each pair of entries, formatted per `--format`.
 
 ## How Blowfish Works
 
@@ -77,7 +87,7 @@ python blowfish_demo.py --input "test1234" --logfile debug --format both
 A stand-alone Windows executable is included in the `dist` folder of this repository (`dist\blowfish_demo.exe`). You can run it on Windows without installing Python:
 
 ```bat
-> dist\blowfish_demo.exe -i "Hello123" -l demo -f both
+> dist\blowfish_demo.exe -i "Hello123" -k "MySecret" -l demo -f both
 ```
 
 ## Future Enhancements
